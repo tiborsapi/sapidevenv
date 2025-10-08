@@ -24,6 +24,11 @@ RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor 
     rm -f microsoft.gpg
 
 # Install Eclipse
+
+RUN apt-get install -y libwebkit2gtk-4.1-0 libgtk-3-0 libglib2.0-0  libx11-6 libxcomposite1  libxdamage1
+RUN apt-get install -y libxrandr2 libxtst6 libnss3 libasound2t64 libatk1.0-0 libatk-bridge2.0-0
+RUN apt-get install -y libxkbcommon0 libwayland-client0
+
 RUN wget https://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/2025-09/R/eclipse-java-2025-09-R-linux-gtk-x86_64.tar.gz && \
     tar -xzf eclipse-java-2025-09-R-linux-gtk-x86_64.tar.gz -C /opt && \
     ln -s /opt/eclipse/eclipse /usr/local/bin/eclipse && \

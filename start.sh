@@ -6,7 +6,7 @@ docker run -it --privileged \
 	--env="XAUTHORITY=$XAUTHORITY" \
 	--volume="$XAUTHORITY:$XAUTHORITY" \
 	--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-	--volume="$HOME/dev:/home/dev/workspace"  \
+	--volume="$HOME/work:/home/ubuntu/work"  \
 	--user $(id -u):$(id -g) \
 	--name dev-env-gui \
 	dev-env:gui
