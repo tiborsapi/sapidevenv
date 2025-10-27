@@ -34,6 +34,11 @@ RUN wget https://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/202
     ln -s /opt/eclipse/eclipse /usr/local/bin/eclipse && \
     rm eclipse-java-2025-09-R-linux-gtk-x86_64.tar.gz
 
+ # Install Node.js (LTS) and Angular CLI
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g @angular/cli
+
 # Set up user (avoid running as root)
 RUN useradd -ms /bin/bash dev
 USER dev
