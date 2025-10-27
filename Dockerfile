@@ -39,6 +39,8 @@ RUN useradd -ms /bin/bash dev
 USER dev
 WORKDIR /home/dev
 
+EXPOSE 8080
+
 # Default command
 CMD ["/bin/bash"]
 
