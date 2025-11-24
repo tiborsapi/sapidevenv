@@ -13,7 +13,9 @@ RUN apt-get install -y curl
 RUN apt-get install -y git 
 RUN apt-get install -y build-essential
 RUN apt-get install -y x11-apps
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y gnupg ca-certificates apt-transport-https lsb-release
+
+# Cleanup apt lists later after all installs
 
 # Install VS Code
 RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
@@ -38,6 +40,21 @@ RUN wget https://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/202
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g @angular/cli
+
+# Install Firefox (from Mozilla team PPA)
+RUN wget -qO- https://archive.mozilla.org/pub/firefox/releases/ | true && \
+    apt-get update && \
+    apt-get install -y firefox-esr || true
+
+# Install Apache JMeter (binary)
+ENV JMETER_VERSION=5.5
+RUN wget -qO /tmp/apache-jmeter.tar.gz https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz && \
+    tar -xzf /tmp/apache-jmeter.tar.gz -C /opt && \
+    ln -s /opt/apache-jmeter-${JMETER_VERSION}/bin/jmeter /usr/local/bin/jmeter && \
+    rm -f /tmp/apache-jmeter.tar.gz
+
+# Final cleanup of apt lists
+RUN rm -rf /var/lib/apt/lists/*
 
 # Set up user (avoid running as root)
 RUN useradd -ms /bin/bash dev
